@@ -1,24 +1,30 @@
 import { ApolloServer } from 'apollo-server';
-import { trackTypeDefs } from './modules/tracks/trackSchema';
-import { resolvers } from './modules/users/userResolver';
-import { userTypeDefs } from './modules/users/userSchema';
-import { artistTypeDefs } from './modules/artists/artistSchema';
-import { bandTypeDefs } from './modules/bands/bandSchema';
-import { favouritesTypeDefs } from './modules/favourites/favouritesSchema';
-import { mergeTypeDefs } from '@graphql-tools/merge';
+import { resolvers } from './resolvers';
+import dotenv from 'dotenv';
+import { resolve } from 'path';
+import { cwd } from 'process';
+import typeDefs from './typeDefs';
+import { UserAPI } from './modules/users/userDatasource';
+import { ArtistAPI } from './modules/artists/artistDatasource';
+
+dotenv.config({ path: resolve(cwd(), '.env') });
+
+const APOLLO_PORT = process.env.PORT || 4000;
 
 const server = new ApolloServer({
-  typeDefs: [
-    userTypeDefs,
-    // trackTypeDefs,
-    // artistTypeDefs,
-    // bandTypeDefs,
-    // favouritesTypeDefs,
-  ],
+  typeDefs,
   resolvers,
-  context: ({ req, res }: any) => ({ req, res }),
+  dataSources: () => {
+    return {
+      userAPI: new UserAPI(),
+      artistAPI: new ArtistAPI(),
+    };
+  },
+  context: ({ req, res }: any) => ({
+    token: req.headers.authorization || '',
+  }),
 });
 
-server.listen().then(({ url }) => {
+server.listen({ port: APOLLO_PORT }).then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
 });

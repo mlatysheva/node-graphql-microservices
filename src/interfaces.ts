@@ -1,4 +1,4 @@
-interface Artist {
+export interface Artist {
   _id: string;
   firstName: string;
   secondName: string;
@@ -10,15 +10,7 @@ interface Artist {
   instruments: string[];
 }
 
-interface User {
-  _id: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-  email: string;
-}
-
-interface Band {
+export interface Band {
   _id: string;
   name: string;
   origin: string;
@@ -27,7 +19,7 @@ interface Band {
   genresIds: string[];
 }
 
-interface Genre {
+export interface Genre {
   _id: string;
   name: string;
   description: string;
@@ -35,7 +27,7 @@ interface Genre {
   year: string;
 }
 
-interface Track {
+export interface Track {
   _id: string;
   title: string;
   albumId: string;
@@ -45,7 +37,7 @@ interface Track {
   genresIds: string[];
 }
 
-interface Album {
+export interface Album {
   _id: string;
   name: string;
   released: number;
@@ -56,7 +48,7 @@ interface Album {
   image: string;
 }
 
-interface Favorite {
+export interface Favorite {
   _id: string;
   userId: string;
   bandsIds: string[];

@@ -1,10 +1,8 @@
 import { gql } from 'apollo-server';
 
-const Query = gql`
+const rootTypeDefs = gql`
   type Query
   type Mutation
 `;
 
-const typeDefs = [Query];
-
-export { typeDefs };
+export { rootTypeDefs };

@@ -13,7 +13,7 @@ export const artistTypeDefs = gql`
     instruments: String
   }
 
-  type Query {
+  extend type Query {
     artist(id: ID!): Artist
     artists: [Artist]
   }
