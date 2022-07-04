@@ -10,11 +10,21 @@ export const artistTypeDefs = gql`
     birthPlace: String
     country: String
     bands: [ID]
-    instruments: String
+    instruments: [String]
   }
 
   extend type Query {
     artist(id: ID!): Artist
     artists: [Artist]
+  }
+
+  extend type Mutation {
+    createArtist(
+      firstName: String!
+      secondName: String
+      country: String
+      bandsIds: [String]
+      instruments: [String]
+    ): Artist
   }
 `;

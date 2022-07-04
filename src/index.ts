@@ -20,9 +20,11 @@ const server = new ApolloServer({
       artistAPI: new ArtistAPI(),
     };
   },
-  context: ({ req, res }: any) => ({
-    token: req.headers.authorization || '',
-  }),
+  context: ({ req, res }) => {
+    return {
+      token: req.headers.authorization || 'default_token',
+    };
+  },
 });
 
 server.listen({ port: APOLLO_PORT }).then(({ url }) => {

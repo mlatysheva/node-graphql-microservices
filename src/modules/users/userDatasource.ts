@@ -1,5 +1,5 @@
 import { Request, Response, RESTDataSource } from 'apollo-datasource-rest';
-import { User, UserInput } from './userSchema';
+import { UserInput } from './userSchema';
 
 export class UserAPI extends RESTDataSource {
   constructor() {
@@ -8,7 +8,8 @@ export class UserAPI extends RESTDataSource {
   }
   willSendRequest(req: any) {
     // req.headers.set('Authorization', `Bearer ${process.env.JWT_SECRET}`);
-    req.headers.set('jwt', this.context.token);
+    // req.headers.set('jwt', this.context.token);
+    req.headers.set('Authorization', this.context.token);
   }
 
   async registerUser(data: UserInput) {
@@ -30,6 +31,7 @@ export class UserAPI extends RESTDataSource {
   async getJWT(email: string, password: string) {
     const response = await this.post('/login', { email, password });
     this.context.token = response.jwt;
+    console.dir(response);
     return { jwt: response.jwt };
   }
 
