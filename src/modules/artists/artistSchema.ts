@@ -13,6 +13,11 @@ export const artistTypeDefs = gql`
     instruments: [String]
   }
 
+  type DeleteArtistResponse {
+    acknowledged: Boolean
+    deletedCount: Int
+  }
+
   extend type Query {
     artist(id: ID!): Artist
     artists: [Artist]
@@ -40,5 +45,6 @@ export const artistTypeDefs = gql`
       bands: [ID]
       instruments: [String]
     ): Artist
+    deleteArtist(id: ID!): DeleteArtistResponse
   }
 `;

@@ -62,5 +62,9 @@ export const artistResolver = {
       });
       return res;
     },
+    deleteArtist: async (_: any, { id }: any, { dataSources }: any) => {
+      const res = await dataSources.artistAPI.deleteArtist({ id });
+      return res;
+    },
   },
 };

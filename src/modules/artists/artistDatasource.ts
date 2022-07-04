@@ -13,15 +13,21 @@ export class ArtistAPI extends RESTDataSource {
   }
 
   async getArtistById(id: string) {
-    const res = await this.get(`/${id}`);
-    // console.log(`artist is:`);
-    // console.dir(res);
-    return res;
+    try {
+      const res = await this.get(`/${id}`);
+      return res;
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async getArtists() {
-    const res = await this.get('/');
-    return res.items;
+    try {
+      const res = await this.get('/');
+      return res.items;
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async createArtist({
@@ -34,17 +40,21 @@ export class ArtistAPI extends RESTDataSource {
     bandsIds,
     instruments,
   }: any) {
-    const res = await this.post('/', {
-      firstName,
-      secondName,
-      middleName,
-      birthDate,
-      birthPlace,
-      country,
-      bandsIds,
-      instruments,
-    });
-    return res;
+    try {
+      const res = await this.post('/', {
+        firstName,
+        secondName,
+        middleName,
+        birthDate,
+        birthPlace,
+        country,
+        bandsIds,
+        instruments,
+      });
+      return res;
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async updateArtist({
@@ -58,17 +68,31 @@ export class ArtistAPI extends RESTDataSource {
     bandsIds,
     instruments,
   }: any) {
-    const res = await this.put(`/${id}`, {
-      firstName,
-      secondName,
-      middleName,
-      birthDate,
-      birthPlace,
-      country,
-      bandsIds,
-      instruments,
-    });
-    return res;
+    try {
+      const res = await this.put(`/${id}`, {
+        firstName,
+        secondName,
+        middleName,
+        birthDate,
+        birthPlace,
+        country,
+        bandsIds,
+        instruments,
+      });
+      return res;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async deleteArtist({ id }: any) {
+    try {
+      const res = await this.delete(`/${id}`);
+      console.dir(res);
+      return res;
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   async didReceiveResponse(res: Response, req: Request) {
