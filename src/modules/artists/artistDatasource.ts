@@ -27,6 +27,9 @@ export class ArtistAPI extends RESTDataSource {
   async createArtist({
     firstName,
     secondName,
+    middleName,
+    birthDate,
+    birthPlace,
     country,
     bandsIds,
     instruments,
@@ -34,6 +37,33 @@ export class ArtistAPI extends RESTDataSource {
     const res = await this.post('/', {
       firstName,
       secondName,
+      middleName,
+      birthDate,
+      birthPlace,
+      country,
+      bandsIds,
+      instruments,
+    });
+    return res;
+  }
+
+  async updateArtist({
+    id,
+    firstName,
+    secondName,
+    middleName,
+    birthDate,
+    birthPlace,
+    country,
+    bandsIds,
+    instruments,
+  }: any) {
+    const res = await this.put(`/${id}`, {
+      firstName,
+      secondName,
+      middleName,
+      birthDate,
+      birthPlace,
       country,
       bandsIds,
       instruments,

@@ -1,3 +1,5 @@
+import { ArtistInput } from './artistTypes';
+
 export const artistResolver = {
   Query: {
     artist: async (_: any, { id }: any, { dataSources }: any) =>
@@ -8,14 +10,54 @@ export const artistResolver = {
   Mutation: {
     createArtist: async (
       _: any,
-      { firstName, secondName, country, bandsIds, instruments }: any,
+      {
+        firstName,
+        secondName,
+        // middleName,
+        // birthDate,
+        // birthPlace,
+        country,
+        bandsIds,
+        instruments,
+      }: any,
       { dataSources }: any
     ) => {
       const res = await dataSources.artistAPI.createArtist({
         firstName,
         secondName,
+        // middleName,
+        // birthDate,
+        // birthPlace,
         country,
         bandsIds,
+        instruments,
+      });
+      return res;
+    },
+    updateArtist: async (
+      _: any,
+      {
+        id,
+        firstName,
+        secondName,
+        middleName,
+        birthDate,
+        birthPlace,
+        country,
+        bands,
+        instruments,
+      }: ArtistInput,
+      { dataSources }: any
+    ) => {
+      const res = await dataSources.artistAPI.updateArtist({
+        id,
+        firstName,
+        secondName,
+        middleName,
+        birthDate,
+        birthPlace,
+        country,
+        bands,
         instruments,
       });
       return res;
