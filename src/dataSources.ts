@@ -1,7 +1,11 @@
 import { ArtistAPI } from './modules/artists/artistDatasource';
+import { BandAPI } from './modules/bands/bandDatasource';
 import { UserAPI } from './modules/users/userDatasource';
 
-export const dataSources = {
-  userAPI: new UserAPI(),
-  artistAPI: new ArtistAPI(),
+export const dataSources = () => {
+  return {
+    userAPI: new UserAPI(),
+    artistAPI: new ArtistAPI(),
+    bandAPI: new BandAPI(),
+  };
 };

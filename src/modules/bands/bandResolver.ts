@@ -1,15 +1,49 @@
-export const resolvers = {
+import { Band } from '../../interfaces';
+
+export const bandResolver = {
   Query: {
-    getBand: async (): Promise<Band> => {
-      const data = await fetch('http://localhost:3003/v1/bands', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+    band: async (_: any, { id }: any, { dataSources }: any) => {
+      const res = await dataSources.bandAPI.getBandById(id);
+      return res;
+    },
+    bands: async (_: any, __: any, { dataSources }: any) => {
+      const res = await dataSources.bandAPI.getBands();
+      return res;
+    },
+  },
+  Mutation: {
+    createBand: async (
+      _: any,
+      { name, origin, members, website, genres }: any,
+      { dataSources }: any
+    ) => {
+      const res = await dataSources.bandAPI.createBand({
+        name,
+        origin,
+        members,
+        website,
+        genres,
       });
-      const response = await data.json();
-      console.dir(response);
-      return response;
+      return res;
+    },
+    updateBand: async (
+      _: any,
+      { id, name, origin, members, website, genres }: any,
+      { dataSources }: any
+    ) => {
+      const res = await dataSources.bandAPI.updateBand({
+        id,
+        name,
+        origin,
+        members,
+        website,
+        genres,
+      });
+      return res;
+    },
+    deleteBand: async (_: any, { id }: any, { dataSources }: any) => {
+      const res = await dataSources.bandAPI.deleteBand({ id });
+      return res;
     },
   },
 };

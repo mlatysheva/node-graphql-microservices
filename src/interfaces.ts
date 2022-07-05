@@ -14,9 +14,18 @@ export interface Band {
   _id: string;
   name: string;
   origin: string;
-  membersId: Artist[];
+  membersId: string[];
   website: string;
   genresIds: string[];
+}
+
+export interface Member {
+  id: string;
+  firstName: string;
+  secondName: string;
+  middleName: string;
+  instrument: string;
+  years: [string];
 }
 
 export interface Genre {
@@ -31,6 +40,7 @@ export interface Track {
   _id: string;
   title: string;
   albumId: string;
+  artistsIds: string[];
   bandsIds: string[];
   duration: number;
   released: number;

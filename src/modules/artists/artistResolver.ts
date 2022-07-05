@@ -46,7 +46,7 @@ export const artistResolver = {
         country,
         bands,
         instruments,
-      }: ArtistInput,
+      }: any,
       { dataSources }: any
     ) => {
       const res = await dataSources.artistAPI.updateArtist({

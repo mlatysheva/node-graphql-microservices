@@ -1,5 +1,4 @@
 export interface ArtistInput {
-  id: string;
   firstName: string;
   secondName: string;
   middleName: string;

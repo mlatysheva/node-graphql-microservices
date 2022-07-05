@@ -1,18 +1,16 @@
-import { RESTDataSource } from 'apollo-datasource-rest';
-import { ArtistInput } from './artistTypes';
-export class ArtistAPI extends RESTDataSource {
+import { Request, Response, RESTDataSource } from 'apollo-datasource-rest';
+
+export class BandAPI extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = process.env.artists_url;
+    this.baseURL = process.env.bands_url;
   }
 
   willSendRequest(req: any) {
     req.headers.set('Authorization', this.context.token);
-    // console.log(`in willSenRequest artistDatasource context is:`);
-    // console.dir(this.context);
   }
 
-  async getArtistById(id: string) {
+  async getBandById(id: string) {
     try {
       const res = await this.get(`/${id}`);
       return res;
@@ -21,7 +19,7 @@ export class ArtistAPI extends RESTDataSource {
     }
   }
 
-  async getArtists() {
+  async getBands() {
     try {
       const res = await this.get('/');
       return res.items;
@@ -30,36 +28,14 @@ export class ArtistAPI extends RESTDataSource {
     }
   }
 
-  async createArtist(artistData: ArtistInput) {
+  async createBand({ name, origin, members, website, genres }: any) {
     try {
-      const res = await this.post('/', artistData);
-      return res;
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  async updateArtist({
-    id,
-    firstName,
-    secondName,
-    middleName,
-    birthDate,
-    birthPlace,
-    country,
-    bandsIds,
-    instruments,
-  }: any) {
-    try {
-      const res = await this.put(`/${id}`, {
-        firstName,
-        secondName,
-        middleName,
-        birthDate,
-        birthPlace,
-        country,
-        bandsIds,
-        instruments,
+      const res = await this.post('/', {
+        name,
+        origin,
+        members,
+        website,
+        genres,
       });
       return res;
     } catch (err) {
@@ -67,7 +43,21 @@ export class ArtistAPI extends RESTDataSource {
     }
   }
 
-  async deleteArtist({ id }: any) {
+  async updateBand({ id, name, origin, members, website, genres }: any) {
+    try {
+      const res = await this.put(`/${id}`, {
+        name,
+        origin,
+        members,
+        website,
+        genres,
+      });
+      return res;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  async deleteBand({ id }: any) {
     try {
       const res = await this.delete(`/${id}`);
       if (res.acknowledged === true) {
@@ -83,9 +73,13 @@ export class ArtistAPI extends RESTDataSource {
     const data = await res.json();
     if (res.ok) {
       data.id = data._id;
+      console.log(`in didReceiveResponse data is `);
+      console.dir(data);
       if (data.items) {
         for (const item of data.items) {
           item.id = item._id;
+          console.log(`in didReceiveResponse item is `);
+          console.dir(item);
         }
       }
     }

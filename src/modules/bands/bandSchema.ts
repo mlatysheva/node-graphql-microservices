@@ -1,34 +1,48 @@
 import { gql } from 'apollo-server';
 
 export const bandTypeDefs = gql`
+  input MemberInput {
+    firstName: String
+    secondName: String
+  }
+
   type Band {
     id: ID!
     name: String
     origin: String
-    members: [Member]
+    members: [String]
     website: String
-    genres: String
+    genresIds: [String]
   }
 
-  type Query {
-    bands(id: ID!): Band
+  type DeleteBandResponse {
+    acknowledged: Boolean
+    deletedCount: Int
+  }
+
+  extend type Query {
+    band(id: ID!): Band
     bands: [Band]
   }
 
-  type Mutation {
+  extend type Mutation {
     createBand(
       name: String!
-      origin: String!
-      website: String!
-      genres: String!
+      origin: String
+      members: [String]
+      website: String
+      genresIds: [String]
     ): Band
+
     updateBand(
       id: ID!
-      name: String!
-      origin: String!
-      website: String!
-      genres: String!
+      name: String
+      origin: String
+      members: [String]
+      website: String
+      genresIds: [String]
     ): Band
-    deleteBand(id: ID!): Band
+
+    deleteBand(id: ID!): DeleteBandResponse
   }
 `;
