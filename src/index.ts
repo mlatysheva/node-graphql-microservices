@@ -12,23 +12,33 @@ import { rootTypeDefs } from './rootQuery';
 import { userTypeDefs } from './modules/users/userSchema';
 import { artistTypeDefs } from './modules/artists/artistSchema';
 import { bandTypeDefs } from './modules/bands/bandSchema';
+import { printSchema } from 'graphql';
+import { genreTypeDefs } from './modules/genres/genreSchema';
+import { GenreAPI } from './modules/genres/genreDatasource';
 
 dotenv.config({ path: resolve(cwd(), '.env') });
 
 const APOLLO_PORT = process.env.PORT || 4000;
 
 const server = new ApolloServer({
-  typeDefs,
-  // typeDefs: [rootTypeDefs, userTypeDefs, artistTypeDefs, bandTypeDefs],
+  // typeDefs,
+  typeDefs: [
+    rootTypeDefs,
+    userTypeDefs,
+    artistTypeDefs,
+    bandTypeDefs,
+    genreTypeDefs,
+  ],
   resolvers,
-  dataSources: dataSources,
-  // dataSources: () => {
-  //   return {
-  //     userAPI: new UserAPI(),
-  //     artistAPI: new ArtistAPI(),
-  //     bandAPI: new BandAPI(),
-  //   };
-  // },
+  // dataSources: dataSources,
+  dataSources: () => {
+    return {
+      userAPI: new UserAPI(),
+      artistAPI: new ArtistAPI(),
+      bandAPI: new BandAPI(),
+      genreAPI: new GenreAPI(),
+    };
+  },
   context: ({ req, res }) => {
     return {
       token: req.headers.authorization || 'default_token',

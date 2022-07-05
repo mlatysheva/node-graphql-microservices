@@ -7,15 +7,19 @@ export const genreTypeDefs = gql`
     description: String
     country: String
     year: Int
-    subGenres: [Genre]
   }
 
-  type Query {
+  type DeleteGenreResponse {
+    acknowledged: Boolean
+    deletedCount: Int
+  }
+
+  extend type Query {
     genre(id: ID!): Genre
-    genres(limit: Int, offset: Int): [Genre]
+    genres: [Genre]
   }
 
-  type Mutation {
+  extend type Mutation {
     createGenre(
       name: String
       description: String
@@ -31,6 +35,6 @@ export const genreTypeDefs = gql`
       year: Int
     ): Genre
 
-    deleteGenre(id: ID!): Genre
+    deleteGenre(id: ID!): DeleteGenreResponse
   }
 `;

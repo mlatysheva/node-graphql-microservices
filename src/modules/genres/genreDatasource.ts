@@ -1,16 +1,23 @@
 import { Request, Response, RESTDataSource } from 'apollo-datasource-rest';
 
-export class BandAPI extends RESTDataSource {
+interface GenreInput {
+  name?: string;
+  description?: string;
+  country?: string;
+  year?: number;
+}
+
+export class GenreAPI extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = process.env.bands_url;
+    this.baseURL = process.env.genres_url;
   }
 
   willSendRequest(req: any) {
     req.headers.set('Authorization', this.context.token);
   }
 
-  async getBandById(id: string) {
+  async getGenreById(id: string) {
     try {
       const res = await this.get(`/${id}`);
       return res;
@@ -19,7 +26,7 @@ export class BandAPI extends RESTDataSource {
     }
   }
 
-  async getBands() {
+  async getGenres() {
     try {
       const res = await this.get('/');
       return res.items;
@@ -28,29 +35,22 @@ export class BandAPI extends RESTDataSource {
     }
   }
 
-  async createBand({ name, origin, members, website, genres }: any) {
+  async createGenre(genreData: GenreInput) {
     try {
-      const res = await this.post('/', {
-        name,
-        origin,
-        members,
-        website,
-        genres,
-      });
+      const res = await this.post('/', genreData);
       return res;
     } catch (err) {
       console.error(err);
     }
   }
 
-  async updateBand({ id, name, origin, members, website, genres }: any) {
+  async updateGenre({ id, name, description, country, year }: any) {
     try {
       const res = await this.put(`/${id}`, {
         name,
-        origin,
-        members,
-        website,
-        genres,
+        description,
+        country,
+        year,
       });
       return res;
     } catch (err) {
@@ -58,11 +58,11 @@ export class BandAPI extends RESTDataSource {
     }
   }
 
-  async deleteBand({ id }: any) {
+  async deleteGenre({ id }: any) {
     try {
       const res = await this.delete(`/${id}`);
       if (res.acknowledged === true) {
-        console.log(`Band with id ${id} deleted`);
+        console.log(`Genre with id ${id} deleted`);
       }
       return res;
     } catch (err) {
@@ -74,13 +74,9 @@ export class BandAPI extends RESTDataSource {
     const data = await res.json();
     if (res.ok) {
       data.id = data._id;
-      console.log(`in didReceiveResponse data is `);
-      console.dir(data);
       if (data.items) {
         for (const item of data.items) {
           item.id = item._id;
-          console.log(`in didReceiveResponse item is `);
-          console.dir(item);
         }
       }
     }
