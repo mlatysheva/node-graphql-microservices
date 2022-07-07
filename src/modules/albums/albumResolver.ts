@@ -24,8 +24,6 @@ export const albumResolver = {
       { id, input }: any,
       { dataSources }: any
     ) => {
-      console.log(`in resolver input is:`);
-      console.dir(input);
       const { name, released, artistsIds, bandsIds, genresIds, image } = input;
       const res = await dataSources.albumAPI.updateAlbum({
         id,
@@ -36,8 +34,6 @@ export const albumResolver = {
         genresIds,
         image,
       });
-      console.log(`in resolver updateAlbum res is:`);
-      console.dir(res);
       return res;
     },
     deleteAlbum: async (_: any, { id }: any, { dataSources }: any) => {

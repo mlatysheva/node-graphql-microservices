@@ -1,6 +1,7 @@
 import { AlbumAPI } from './modules/albums/albumDatasource';
 import { ArtistAPI } from './modules/artists/artistDatasource';
 import { BandAPI } from './modules/bands/bandDatasource';
+import { FavouritesAPI } from './modules/favourites/favouritesDatasource';
 import { GenreAPI } from './modules/genres/genreDatasource';
 import { UserAPI } from './modules/users/userDatasource';
 
@@ -11,5 +12,6 @@ export const dataSources = () => {
     bandAPI: new BandAPI(),
     genreAPI: new GenreAPI(),
     albumAPI: new AlbumAPI(),
+    favouritesAPI: new FavouritesAPI(),
   };
 };
