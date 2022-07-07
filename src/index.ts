@@ -15,30 +15,32 @@ import { bandTypeDefs } from './modules/bands/bandSchema';
 import { printSchema } from 'graphql';
 import { genreTypeDefs } from './modules/genres/genreSchema';
 import { GenreAPI } from './modules/genres/genreDatasource';
+import { albumTypeDefs } from './modules/albums/albumSchema';
 
 dotenv.config({ path: resolve(cwd(), '.env') });
 
 const APOLLO_PORT = process.env.PORT || 4000;
 
 const server = new ApolloServer({
-  // typeDefs,
-  typeDefs: [
-    rootTypeDefs,
-    userTypeDefs,
-    artistTypeDefs,
-    bandTypeDefs,
-    genreTypeDefs,
-  ],
+  typeDefs,
+  // typeDefs: [
+  //   rootTypeDefs,
+  //   userTypeDefs,
+  //   artistTypeDefs,
+  //   bandTypeDefs,
+  //   genreTypeDefs,
+  //   albumTypeDefs,
+  // ],
   resolvers,
-  // dataSources: dataSources,
-  dataSources: () => {
-    return {
-      userAPI: new UserAPI(),
-      artistAPI: new ArtistAPI(),
-      bandAPI: new BandAPI(),
-      genreAPI: new GenreAPI(),
-    };
-  },
+  dataSources: dataSources,
+  // dataSources: () => {
+  //   return {
+  //     userAPI: new UserAPI(),
+  //     artistAPI: new ArtistAPI(),
+  //     bandAPI: new BandAPI(),
+  //     genreAPI: new GenreAPI(),
+  //   };
+  // },
   context: ({ req, res }) => {
     return {
       token: req.headers.authorization || 'default_token',

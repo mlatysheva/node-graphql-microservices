@@ -1,3 +1,4 @@
+import { AlbumAPI } from './modules/albums/albumDatasource';
 import { ArtistAPI } from './modules/artists/artistDatasource';
 import { BandAPI } from './modules/bands/bandDatasource';
 import { GenreAPI } from './modules/genres/genreDatasource';
@@ -9,5 +10,6 @@ export const dataSources = () => {
     artistAPI: new ArtistAPI(),
     bandAPI: new BandAPI(),
     genreAPI: new GenreAPI(),
+    albumAPI: new AlbumAPI(),
   };
 };

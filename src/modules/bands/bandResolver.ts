@@ -1,5 +1,3 @@
-import { Band } from '../../interfaces';
-
 export const bandResolver = {
   Query: {
     band: async (_: any, { id }: any, { dataSources }: any) => {

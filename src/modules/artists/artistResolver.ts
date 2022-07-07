@@ -1,5 +1,3 @@
-import { ArtistInput } from './artistTypes';
-
 export const artistResolver = {
   Query: {
     artist: async (_: any, { id }: any, { dataSources }: any) =>

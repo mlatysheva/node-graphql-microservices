@@ -5,11 +5,6 @@ interface GenreInput {
   year?: number;
 }
 
-interface UpdateGenreInput {
-  id: string;
-  genreData: GenreInput;
-}
-
 export const genreResolver = {
   Query: {
     genre: async (_: any, { id }: any, { dataSources }: any) => {

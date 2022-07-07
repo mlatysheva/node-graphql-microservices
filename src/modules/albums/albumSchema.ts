@@ -7,9 +7,22 @@ export const albumTypeDefs = gql`
     released: Int
     artistsIds: [String]
     bandsIds: [String]
-    trackIds: [String]
     genresIds: [String]
     image: String
+  }
+
+  input AlbumInput {
+    name: String
+    released: Int
+    artistsIds: [String]
+    bandsIds: [String]
+    genresIds: [String]
+    image: String
+  }
+
+  type DeleteAlbumResponse {
+    acknowledged: Boolean
+    deletedCount: Int
   }
 
   extend type Query {
@@ -18,6 +31,8 @@ export const albumTypeDefs = gql`
   }
 
   extend type Mutation {
-    createAlbum(name: String!, released: Int): Album
+    createAlbum(input: AlbumInput): Album
+    updateAlbum(id: ID!, input: AlbumInput): Album
+    deleteAlbum(id: ID!): DeleteAlbumResponse
   }
 `;
