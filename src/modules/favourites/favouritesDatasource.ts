@@ -12,7 +12,7 @@ export class FavouritesAPI extends RESTDataSource {
   async getFavourites() {
     try {
       const res = await this.get('/');
-      return res.data.items;
+      return res;
     } catch (err) {
       console.error(err);
     }

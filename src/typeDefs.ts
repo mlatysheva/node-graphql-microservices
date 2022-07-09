@@ -5,6 +5,7 @@ import { bandTypeDefs } from './modules/bands/bandSchema';
 import { genreTypeDefs } from './modules/genres/genreSchema';
 import { albumTypeDefs } from './modules/albums/albumSchema';
 import { favouritesTypeDefs } from './modules/favourites/favouritesSchema';
+import { trackTypeDefs } from './modules/tracks/trackSchema';
 
 const typeDefs = [
   rootTypeDefs,
@@ -13,6 +14,7 @@ const typeDefs = [
   bandTypeDefs,
   genreTypeDefs,
   albumTypeDefs,
+  trackTypeDefs,
   favouritesTypeDefs,
 ];
 

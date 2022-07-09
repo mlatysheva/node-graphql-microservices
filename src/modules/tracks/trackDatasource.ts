@@ -1,16 +1,28 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
-import { ArtistInput } from './artistTypes';
-export class ArtistAPI extends RESTDataSource {
+
+export interface TrackInput {
+  title: string;
+  albumId: string;
+  artistsIds: string[];
+  bandsIds: string[];
+  duration: number;
+  released: number;
+  genresIds: string[];
+}
+
+export class TrackAPI extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = process.env.artists_url;
+    this.baseURL = process.env.tracks_url;
   }
 
   willSendRequest(req: any) {
     req.headers.set('Authorization', this.context.token);
+    console.log('in willSendRequest req.body is');
+    console.dir(req.body);
   }
 
-  async getArtistById(id: string) {
+  async getTrack(id: string) {
     try {
       const res = await this.get(`/${id}`);
       return res;
@@ -19,57 +31,39 @@ export class ArtistAPI extends RESTDataSource {
     }
   }
 
-  async getArtists() {
+  async getTracks(limit: number, offset: number) {
     try {
-      const res = await this.get('/');
+      const res = await this.get(`?limit=${limit}&offset=${offset}`);
       return res.items;
     } catch (err) {
       console.error(err);
     }
   }
 
-  async createArtist(artistData: ArtistInput) {
+  async createTrack(trackData: any) {
     try {
-      const res = await this.post('/', artistData);
+      return await this.post('/', trackData.input);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async updateTrack(id: string, input: any) {
+    try {
+      console.log(`in updateTrack Datasource input is`);
+      console.dir(input);
+      const res = await this.put(`/${id}`, input);
       return res;
     } catch (err) {
       console.error(err);
     }
   }
 
-  async updateArtist({
-    id,
-    firstName,
-    secondName,
-    middleName,
-    birthDate,
-    birthPlace,
-    country,
-    bandsIds,
-    instruments,
-  }: any) {
-    try {
-      const res = await this.put(`/${id}`, {
-        firstName,
-        secondName,
-        middleName,
-        birthDate,
-        birthPlace,
-        country,
-        bandsIds,
-        instruments,
-      });
-      return res;
-    } catch (err) {
-      console.error(err);
-    }
-  }
-
-  async deleteArtist({ id }: any) {
+  async deleteTrack(id: string) {
     try {
       const res = await this.delete(`/${id}`);
       if (res.acknowledged === true) {
-        console.log(`Band with id ${id} deleted`);
+        console.log(`Track with id ${id} deleted`);
       }
       return res;
     } catch (err) {
@@ -79,6 +73,8 @@ export class ArtistAPI extends RESTDataSource {
 
   async didReceiveResponse(res: Response, req: Request) {
     const data = await res.json();
+    console.log('in didReceiveResponse data is');
+    console.dir(data);
     if (res.ok) {
       data.id = data._id;
       if (data.items) {

@@ -15,7 +15,6 @@ export class UserAPI extends RESTDataSource {
   async registerUser(data: UserInput) {
     const response = await this.post('/register', data);
     response.id = response._id;
-    console.dir(response);
     return response;
   }
 
@@ -31,7 +30,6 @@ export class UserAPI extends RESTDataSource {
   async getJWT(email: string, password: string) {
     const response = await this.post('/login', { email, password });
     this.context.token = response.jwt;
-    console.dir(response);
     return { jwt: response.jwt };
   }
 

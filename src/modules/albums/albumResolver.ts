@@ -1,7 +1,5 @@
 import { AlbumInput } from './albumTypes';
 
-export { AlbumInput } from './albumTypes';
-
 export const albumResolver = {
   Query: {
     album: async (_: any, { id }: any, { dataSources }: any) =>
@@ -18,12 +16,7 @@ export const albumResolver = {
       const res = await dataSources.albumAPI.createAlbum(albumData);
       return res;
     },
-    updateAlbum: async (
-      _: any,
-      // { id, name, released, artistsIds, bandsIds, genresIds, image }: any,
-      { id, input }: any,
-      { dataSources }: any
-    ) => {
+    updateAlbum: async (_: any, { id, input }: any, { dataSources }: any) => {
       const { name, released, artistsIds, bandsIds, genresIds, image } = input;
       const res = await dataSources.albumAPI.updateAlbum({
         id,

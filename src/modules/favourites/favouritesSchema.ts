@@ -4,13 +4,13 @@ export const favouritesTypeDefs = gql`
   type Favourites {
     id: ID!
     userId: ID!
-    bands: [ID]
-    genres: [ID]
-    artists: [ID]
-    tracks: [ID]
+    bandsIds: [ID]
+    genresIds: [ID]
+    artistsIds: [ID]
+    tracksIds: [ID]
   }
   type Query {
-    favourites(userId: ID!): Favourites
+    favourites: Favourites
   }
   type Mutation {
     addTrackToFavourites(userId: ID!, trackId: ID!): Favourites
