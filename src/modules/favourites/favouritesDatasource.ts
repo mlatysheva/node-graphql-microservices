@@ -18,9 +18,36 @@ export class FavouritesAPI extends RESTDataSource {
     }
   }
 
-  async addToFavourites({ type, id }: any) {
+  async addBandToFavourites(id: any) {
     try {
-      const res = await this.put('/', { type, id });
+      const res = await this.put('/add', { type: 'bands', id });
+      return res;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async addTrackToFavourites(id: any) {
+    try {
+      const res = await this.put('/add', { type: 'tracks', id });
+      return res;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async addArtistToFavourites(id: any) {
+    try {
+      const res = await this.put('/add', { type: 'artists', id });
+      return res;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async addGenreToFavourites(id: any) {
+    try {
+      const res = await this.put('/add', { type: 'genres', id });
       return res;
     } catch (err) {
       console.error(err);
